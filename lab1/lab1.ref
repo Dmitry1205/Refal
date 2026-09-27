@@ -1,0 +1,78 @@
+* Старт
+$ENTRY Go {
+  = <RunTests <Tests>>;
+}
+
+* Тесты
+RunTests {
+  /* empty */ = /* empty */;
+  (e.Test) e.Ost =
+    <Parse e.Test>
+    <RunTests e.Ost>;
+}
+
+Tests {
+  = ('^aXbXa$ = ^dXeXl$')
+    ('^aXXXb$ = ^aXXXXb$')
+    ('^XaXXaX$ = ^XabaX$')
+    ('^XasdXsd(X)$ = ^XXaaaXfg$');
+}
+
+* Функции для работы со строками
+Trim {
+  '^' e.Str '$' = e.Str;
+  e.Str = e.Str;
+}
+
+Parse {
+  e.Left ' = ' e.Right =
+    <ProutList  <BackIter <BackIter <NextIter <SplitOnX <Trim e.Left>>>>>>
+    <Prout <FormatRight <SplitOnX <Trim e.Right>>>>
+    <Prout '-------------------'>;
+  
+  e.Left '=' e.Right =
+    <ProutList <SplitOnX <Trim e.Left>>>
+    <Prout <FormatRight <SplitOnX <Trim e.Right>>>>
+    <Prout '-------------------'>;
+
+  e.Str = <Prout 'Ошибка: нет = в строке'>;
+}
+
+SplitOnX {
+  e.Str = <SplitAcc () e.Str>;
+}
+
+SplitAcc {
+  (e.Part) /* empty */ = (e.Part);
+  (e.Part) 'X' e.Rest = (e.Part) <SplitAcc () e.Rest>;
+  (e.Part) s.C e.Rest = <SplitAcc (e.Part s.C) e.Rest>;
+}
+
+/* Печать: каждое слово с новой строки */
+ProutList {
+  /* empty */ = /* empty */;
+  e.Skip '>' (e.Part) e.Ost = <Prout '[' e.Part ']'>; 
+  e.Skip '>' = <Prout 'END'>;
+  (e.Part) e.Rest = <Prout '(' e.Part ')'> <ProutList e.Rest>;
+}
+
+/* Формат правой части: {} вместо X, слова без скобок */
+FormatRight {
+  /* empty */ = /* empty */;
+  (e.Word) = e.Word;
+  (e.Word) e.Rest = e.Word '{}' <FormatRight e.Rest>;
+}
+
+* -------------------------------------------------------
+
+NextIter {
+  e.Left '>' (e.Next) e.Right = e.Left (e.Next) '>' e.Right;
+  e.Left '>' = e.Left '>';
+  e.List = '>' e.List;
+}
+
+BackIter {
+  e.Left (e.Prev) '>' e.Right = e.Left '>' (e.Prev) e.Right;
+  '>' e.Right = '>' e.Right;
+  e.List = e.List '>';
+}
