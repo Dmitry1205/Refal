@@ -24,20 +24,6 @@ Trim {
   e.Str = e.Str;
 }
 
-Parse {
-  e.Left ' = ' e.Right =
-    <ProutList  <BackIter <BackIter <NextIter <SplitOnX <Trim e.Left>>>>>>
-    <Prout <FormatRight <SplitOnX <Trim e.Right>>>>
-    <Prout '-------------------'>;
-  
-  e.Left '=' e.Right =
-    <ProutList <SplitOnX <Trim e.Left>>>
-    <Prout <FormatRight <SplitOnX <Trim e.Right>>>>
-    <Prout '-------------------'>;
-
-  e.Str = <Prout 'Ошибка: нет = в строке'>;
-}
-
 SplitOnX {
   e.Str = <SplitAcc () e.Str>;
 }
@@ -54,6 +40,31 @@ ProutList {
   e.Skip '>' (e.Part) e.Ost = <Prout '[' e.Part ']'>; 
   e.Skip '>' = <Prout 'END'>;
   (e.Part) e.Rest = <Prout '(' e.Part ')'> <ProutList e.Rest>;
+}
+
+Parse {
+  e.Left ' = ' e.Right =
+    <CreateSRS '|START|>' <SplitOnX <Trim e.Left>>>
+    <Prout '-------------------'>;
+
+  e.Left '=' e.Right =
+    <CreateSRS '|START|>' <SplitOnX <Trim e.Left>>>
+    <Prout '-------------------'>;
+
+  e.Str = <Prout 'Ошибка: нет = в строке'>;
+}
+
+IndexList {
+  e.Skip '>' () e.Ost = '[EMPTY]';
+  e.Skip '>' (e.Part) e.Ost = e.Part;
+  e.Skip '>' = 'END';
+  e.List = <FormatList e.List>;
+}
+
+FormatList {
+  /* empty */ = /* empty */;
+  (e.Part) = '(' e.Part ')';
+  (e.Part) e.Rest = '(' e.Part ')' <FormatList e.Rest>;
 }
 
 /* Формат правой части: {} вместо X, слова без скобок */
@@ -75,4 +86,30 @@ BackIter {
   e.Left (e.Prev) '>' e.Right = e.Left '>' (e.Prev) e.Right;
   '>' e.Right = '>' e.Right;
   e.List = e.List '>';
+}
+
+* ------------------------------------------------------
+
+CreateSRS {
+  '|START|' e.Str1 = <Prout '^ -> %' '|FIRST|>' '|' <IndexList e.Str1> '|'>
+                   <Prout '|FIRST|>|' <IndexList e.Str1> '|' <IndexList e.Str1> '  ->  ' <IndexList e.Str1> '[' '@' '>|' <IndexList <NextIter e.Str1>> '|'>
+                   <Prout '|FIRST|>|' <IndexList e.Str1> '|' 'GAMMA' ' -> ' '|END|<GAMMA'>
+                   <Prout 'GAMMA|END|< -> |END|<GAMMA'>
+                   <Prout '%|END|< -> ^' >
+                   <CreateSRS '|SECOND|' <NextIter e.Str1>>;
+  '|SECOND|' e.Str1 = <Prout '>|' <IndexList e.Str1> '|' <IndexList e.Str1> ' -> ' '<|UK|]' <IndexList e.Str1> '!'>
+                      <Prout '>|' <IndexList e.Str1> '|' <IndexList e.Str1> ' -> ' <IndexList e.Str1> '>|' <IndexList e.Str1> '|'>
+                      <Prout '>|' <IndexList e.Str1> '|' 'GAMMA' ' -> ' 'GAMMA>|' <IndexList e.Str1> '|'>
+                      <Prout 'GAMMA<|UK| -> <|UK|GAMMA'>
+                      <Prout '@GAMMA<|UK| -> GAMMA@|SR|>|' 'GAMMA' '|'>
+                      <Prout '|SR|>|GAMMA|' 'GAMMA -> GAMMA|SR|>|GAMMA|'>
+                      <Prout '|SR|>|GAMMA|!GAMMA_1 -> <|UK|GAMMA!   (IF GAMMA == GAMMA_1)'>
+                      <Prout '|SR|>|GAMMA|!GAMMA_1 -> |BACK|<|' <IndexList <BackIter e.Str1>> '|GAMMA_1' '(IF GAMMA != GAMMA_1)'>
+                      <Prout ']' <IndexList <BackIter e.Str1>> '|BACK|< -> ' <IndexList <BackIter e.Str1>> '>|' <IndexList <BackIter e.Str1>> '|'>
+                      <Prout '@<|BACK| -> <|BACK|'>
+                      <Prout 'GAMMA|BACK|<|' <IndexList <BackIter e.Str1>>'| -> ' '|BACK|<|' <IndexList <BackIter e.Str1>>  '|GAMMA'>
+                      <Prout '@]|UK|< -> ]|SKIP!|>|' <IndexList <NextIter e.Str1>> '|'>
+                      <Prout '|SKIP!|>|' <IndexList <NextIter e.Str1>> '|GAMMA -> GAMMA|SKIP!|>|' <IndexList <NextIter e.Str1>> '|'>
+                      <Prout '|SKIP!|>|' <IndexList <NextIter e.Str1>> '|! -> >|' <IndexList <NextIter e.Str1>> '|'>;
+    e.Str = e.Str;
 }
