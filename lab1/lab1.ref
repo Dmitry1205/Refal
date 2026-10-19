@@ -97,93 +97,142 @@ BackIter {
 
 * ------------------------------------------------------
 
+
+PSP {
+  =
+    <Prout ']<|PSP| -> <|PSP_COPY|+]'>
+    <Prout 'ALPHA<|PSP_COPY| -> <|PSP_COPY|ALPHA'>
+    <Prout '+<|PSP_COPY| -> <|PSP_COPY|+'>
+    <Prout '[<|PSP_COPY| -> [|PSP_COPY|>'>
+    <Prout '!<|PSP_COPY| -> |PSP_COPY|>'>
+    <Prout '|PSP_COPY|>( -> (!|COPY_O|>'>
+    <Prout '|PSP_COPY|>) -> )!|COPY_C|>'>
+    <Prout '|COPY_O|>DELTA -> DELTA|COPY_O|>'>
+    <Prout '|COPY_C|>DELTA -> DELTA|COPY_C|>'>
+    <Prout '|COPY_O|>] -> <|PSP_COPY|(]'>
+    <Prout '|COPY_C|>] -> <|PSP_COPY|)]'>
+    <Prout '|PSP_COPY|>+ -> +|PSP?|>'>
+    <Prout '|PSP?|>() -> |PSP?|>'>
+    <Prout '|PSP?|>(( -> (|PSP?|>('>
+    <Prout '|PSP?|>(] -> <|PSP-|]'>
+    <Prout '|PSP?|>)) -> )|PSP?|>)'>
+    <Prout '|PSP?|>)( -> )|PSP?|>('>
+    <Prout '|PSP?|>)] -> )|PSP?|>]'>
+    <Prout '|PSP?|>] -> <|PSP?|]'>
+    <Prout '+)<|PSP?| -> +<|PSP-|'>
+    <Prout '()<|PSP?| -> <|PSP?|'>
+    <Prout '+(<|PSP?| -> +|PSP?|>('>
+    <Prout '((<|PSP?| -> (<|PSP?|('>
+    <Prout '))<|PSP?| -> )<|PSP?|)'>
+    <Prout ')(<|PSP?| -> )<|PSP?|('>
+    <Prout '+<|PSP?| -> |PSP?|>+'>
+    <Prout '|PSP?|>+] -> ]|PSP+|'>
+    <Prout '|PSP?|>+ALPHA -> +|PSP?|>ALPHA'>
+    <Prout 'ALPHA<|PSP-| -> <|PSP-|'>
+    <Prout '+<|PSP-| -> |PSP-|>'>
+    <Prout '|PSP-|>ALPHA -> |PSP-|>'>
+*    <Prout '|PSP-|>] -> ]<|BACK|'>
+}
+
 CreateSRS {
   e.Str1 '>' (e.Right) (e.n)= 
-                               <Prout 'FINISH-----------------------------------' e.Str1>
-                               <Prout '<|UK' <Symb e.n> '|'<IndexList <BackIter e.Str1 '>'>>'!' <Symb e.n> '! -> <|DEL|?' e.Right '$'>
-                               <Prout 'APLPHA<|DEL| -> <|DEL|'>
-                               <Prout 'ALPHA]<|DEL| -> ALPHA<|OK|]'>
-                               <Prout '[]<|DEL| -> <|ALL|'>
-                               <Prout 'LAMBDAGAMMA<|OK| -> LAMBDA<|OK|GAMMA'>
-                               <Prout '[ALPHA<|OK| -> ALPHA[|NAR|>|ALPHA|'>
-                               <Prout '|NAR|>|GAMMA|LAMBDA -> LAMBDA|NAR|>|GAMMA|'>
-                               <Prout '|NAR|>|ALPHA|} -> ALPHA}|NAR|>|ALPHA|'>
-                               <Prout '|NAR|>|ALPHA|$ -> <|OK|$'>
-                               <Prout '[]<|OK| -> <|ALL|'>
-                               <Prout 'GAMMA<|ALL| -> <|ALL|'>
-                               <Prout '%<|ALL| -> |ALL|>'>
-                               <Prout '|ALL|>ALPHA -> |ALL|>'>
-                               <Prout '|ALL|>? -> ^|CLR|>'>
-                               <Prout '|CLR|>ALPHA -> BETA|CLR|>'>
-                               <Prout '|CLR|>{ -> |CLR|>'>
-                               <Prout '|CLR|>} -> |CLR|>'>
-                               <Prout '|CLR|>$ -> $'>;
+    <Prout 'FINISH-----------------------------------' e.Str1>
+    <Prout '<|UK' <Symb e.n> '|'<IndexList <BackIter e.Str1 '>'>>'!' <Symb e.n> '! -> <|DEL|?' e.Right '$'>
+    <Prout 'APLPHA<|DEL| -> <|DEL|'>
+    <Prout 'ALPHA]<|DEL| -> ALPHA<|OK|]'>
+    <Prout '[]<|DEL| -> <|ALL|'>
+    <Prout 'LAMBDAGAMMA<|OK| -> LAMBDA<|OK|GAMMA'>
+    <Prout '[ALPHA<|OK| -> ALPHA[|NAR|>|ALPHA|'>
+    <Prout '|NAR|>|GAMMA|LAMBDA -> LAMBDA|NAR|>|GAMMA|'>
+    <Prout '|NAR|>|ALPHA|} -> ALPHA}|NAR|>|ALPHA|'>
+    <Prout '|NAR|>|ALPHA|$ -> <|OK|$'>
+    <Prout '[]<|OK| -> <|ALL|'>
+    <Prout 'GAMMA<|ALL| -> <|ALL|'>
+    <Prout '%<|ALL| -> |ALL|>'>
+    <Prout '|ALL|>ALPHA -> |ALL|>'>
+    <Prout '|ALL|>? -> ^|CLR|>'>
+    <Prout '|CLR|>ALPHA -> BETA|CLR|>'>
+    <Prout '|CLR|>{ -> |CLR|>'>
+    <Prout '|CLR|>} -> |CLR|>'>
+    <Prout '|CLR|>$ -> $'>;
 
   '|START|' s.z (e.Str0) () e.Str1 (e.Right) (e.n) =
-                   <Prout 'START -----------------------------------------------------' e.Str1>
-                   <Prout e.Str0 ' -> %' <LTrim e.Str0> '[|CLS|>|EMPTY|'>
-                   <Prout '|CLS|>|EMPTY|ALPHA -> ]<|UK' <Symb e.n>'|!' <Symb e.n> '!ALPHA'>
-                   <Prout ']<|BACK|GAMMA -> <|HUNTER|GAMMA|CLS|>|EMPTY|'>
-                   <Prout ']<|BACK|$ -> |END|<$'>
-                   <Prout 'ALPHA<|BACK| -> <|BACK|ALPHA'>
-                   <Prout 'ALPHA<|HUNTER| -> <|HUNTER|ALPHA'>
-                   <Prout 'DELTA@<|HUNTER| -> DELTA'>
-                   <Prout '[<|HUNTER| -> ['>
-                   <Prout '|CLS|>|EMPTY|$ -> |END|<$' >
-                   <Prout 'GAMMA|END|< -> |END|<GAMMA'>
-                   <Prout '[|END|< -> |END|<'>
-                   <Prout '%|END|< -> ^'>
-                   <Prout '|SR|>|GAMMA|' 'DELTA -> DELTA|SR|>|GAMMA|'>
-                   
-                   <CreateSRS '>' e.Str1 (e.Right) (e.n)>;
+    <Prout 'START -----------------------------------------------------' e.Str1>
+    <Prout e.Str0 ' -> %' <LTrim e.Str0> '[|CLS|>|EMPTY|'>
+*    <Prout '|CLS|>|EMPTY|ALPHA -> ]<|UK' <Symb e.n>'|!' <Symb e.n> '!ALPHA'>
+    <Prout '|CLS|>|EMPTY|ALPHA -> ]<|PSP|'>
+    <Prout ']<|BACK|GAMMA -> <|HUNTER|GAMMA|CLS|>|EMPTY|'>
+    <Prout ']<|BACK|$ -> |END|<$'>
+
+    <PSP>
+    <Prout '|PSP-|>] -> ]<|BACK|'>
+    <Prout ']|PSP+| -> ]<|UK' <Symb e.n> '|!' <Symb e.n> '!ALPHA'>
+
+    <Prout 'ALPHA<|BACK| -> <|BACK|ALPHA'>
+    <Prout 'ALPHA<|HUNTER| -> <|HUNTER|ALPHA'>
+    <Prout 'DELTA@<|HUNTER| -> DELTA'>
+    <Prout '[<|HUNTER| -> ['>
+    <Prout '|CLS|>|EMPTY|$ -> |END|<$' >
+    <Prout 'GAMMA|END|< -> |END|<GAMMA'>
+    <Prout '[|END|< -> |END|<'>
+    <Prout '%|END|< -> ^'>
+    <Prout '|SR|>|GAMMA|' 'DELTA -> DELTA|SR|>|GAMMA|'>
+    
+    <CreateSRS '>' e.Str1 (e.Right) (e.n)>;
 
   '|START|' e.Str1 (e.Right) (e.n) = 
-                   <Prout 'START -----------------------------------------------------' e.Str1>
-                   <Prout <IndexList e.Str1> ' -> %' <LTrim <IndexList e.Str1>> '[|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
-                   <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|' <IndexList <NextIter e.Str1>> ' -> ]<|UK' <Symb e.n>'|' <IndexList <NextIter e.Str1>> '!' <Symb e.n> '!'>
-                   <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|' 'GAMMA -> GAMMA|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
-                   <Prout ']' <IndexList <NextIter e.Str1>> '<|BACK| -> <|HUNTER|' <IndexList <NextIter e.Str1>> '|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
-                   <Prout 'ALPHA<|BACK| -> <|BACK|ALPHA'>
-                   <Prout 'ALPHA<|HUNTER| -> <|HUNTER|ALPHA'>
-                   <Prout 'DELTA@<|HUNTER| -> DELTA'>
-                   <Prout '[<|HUNTER| -> ['>
-                   <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|$ -> |END|<$' >
-                   <Prout 'GAMMA|END|< -> |END|<GAMMA'>
-                   <Prout '[|END|< -> |END|<'>
-                   <Prout '%|END|< -> ^'>
-                   <Prout '|SR|>|GAMMA|' 'DELTA -> DELTA|SR|>|GAMMA|'>
+    <Prout 'START -----------------------------------------------------' e.Str1>
+    <Prout <IndexList e.Str1> ' -> %' <LTrim <IndexList e.Str1>> '[|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
+*    <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|' <IndexList <NextIter e.Str1>> ' -> ]<|UK' <Symb e.n>'|' <IndexList <NextIter e.Str1>> '!' <Symb e.n> '!'>
+    <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|' <IndexList <NextIter e.Str1>> ' -> ]<|PSP|' <IndexList <NextIter e.Str1>>>
+    <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|' 'GAMMA -> GAMMA|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
+    <Prout ']' <IndexList <NextIter e.Str1>> '<|BACK| -> <|HUNTER|' <IndexList <NextIter e.Str1>> '|CLS|>|' <IndexList <NextIter e.Str1>> '|'>
+    
+    <PSP>
+    <Prout '|PSP-|>] -> ]' <IndexList <NextIter e.Str1>> '<|BACK|'>
+    <Prout ']|PSP+| -> ]<|UK' <Symb e.n> '|' <IndexList <NextIter e.Str1>> '!' <Symb e.n> '!'>
+    
+    <Prout 'ALPHA<|BACK| -> <|BACK|ALPHA'>
+    <Prout 'ALPHA<|HUNTER| -> <|HUNTER|ALPHA'>
+    <Prout 'DELTA@<|HUNTER| -> DELTA'>
+    <Prout '[<|HUNTER| -> ['>
+    <Prout '|CLS|>|' <IndexList <NextIter e.Str1>> '|$ -> |END|<$' >
+    <Prout 'GAMMA|END|< -> |END|<GAMMA'>
+    <Prout '[|END|< -> |END|<'>
+    <Prout '%|END|< -> ^'>
+    <Prout '|SR|>|GAMMA|' 'DELTA -> DELTA|SR|>|GAMMA|'>
 
-                   <CreateSRS <NextIter <NextIter e.Str1>> (e.Right) (e.n)>;
+    <CreateSRS <NextIter <NextIter e.Str1>> (e.Right) (e.n)>;
 
 
   e.Str1 '>' () e.Str2 (e.Right) (e.n) =
-                      <Prout 'SECOND-----------------------------------------------------' e.Str2>
-                      <Prout 'LAMBDAGAMMA<|UK' <Symb e.n> '| -> LAMBDA<|UK' <Symb e.n> '|GAMMA'>
-                      <Prout '[]<|UK' <Symb e.n> '| -> []|SKIP!' <Symb e.n> '|>|EMPTY|'>
-                      <Prout '@ALPHA<|UK' <Symb e.n> '| -> ALPHA@|SR|>|' 'ALPHA' '|'>
-                      <Prout '[ALPHA<|UK' <Symb e.n> '| -> [ALPHA@|SR|>|ALPHA|'>
-                      <Prout '|SR|>|ALPHA|!' <Symb e.n> '!ALPHA -> <|UK' <Symb e.n> '|ALPHA!' <Symb e.n> '!'>  
-                      <Prout '|SR|>|ALPHA|!' <Symb e.n> '!BETA -> <|BACK|' 'BETA'>
-                      <Prout '@]<|UK' <Symb e.n> '| -> ]|SKIP!' <Symb e.n> '|>|EMPTY|'>
-                      <Prout '|SKIP!' <Symb e.n> '|>|EMPTY|GAMMA -> GAMMA|SKIP!' <Symb e.n> '|>|EMPTY|'>
-                      <Prout '|SKIP!' <Symb e.n> '|>|EMPTY|!' <Symb e.n> '! -> >|EMPTY|'>
-                      <Prout '>|EMPTY|' ' -> <|UK' <Symb <Add e.n 1>> '|!' <Symb <Add e.n 1>> '!'>
-                      <CreateSRS '>' e.Str2 (e.Right) (<Add e.n 1>)>;
+    <Prout 'SECOND-----------------------------------------------------' e.Str2>
+    <Prout 'LAMBDAGAMMA<|UK' <Symb e.n> '| -> LAMBDA<|UK' <Symb e.n> '|GAMMA'>
+    <Prout '[]<|UK' <Symb e.n> '| -> []|SKIP!' <Symb e.n> '|>|EMPTY|'>
+    <Prout '@ALPHA<|UK' <Symb e.n> '| -> ALPHA@|SR|>|' 'ALPHA' '|'>
+    <Prout '[ALPHA<|UK' <Symb e.n> '| -> [ALPHA@|SR|>|ALPHA|'>
+    <Prout '|SR|>|ALPHA|!' <Symb e.n> '!ALPHA -> <|UK' <Symb e.n> '|ALPHA!' <Symb e.n> '!'>  
+    <Prout '|SR|>|ALPHA|!' <Symb e.n> '!BETA -> <|BACK|' 'BETA'>
+    <Prout '@]<|UK' <Symb e.n> '| -> ]|SKIP!' <Symb e.n> '|>|EMPTY|'>
+    <Prout '|SKIP!' <Symb e.n> '|>|EMPTY|GAMMA -> GAMMA|SKIP!' <Symb e.n> '|>|EMPTY|'>
+    <Prout '|SKIP!' <Symb e.n> '|>|EMPTY|!' <Symb e.n> '! -> >|EMPTY|'>
+    <Prout '>|EMPTY|' ' -> <|UK' <Symb <Add e.n 1>> '|!' <Symb <Add e.n 1>> '!'>
+    <CreateSRS '>' e.Str2 (e.Right) (<Add e.n 1>)>;
 
   e.Str1 (e.Right) (e.n) = 
-                      <Prout 'SECOND------------------------------------------------------' e.Str1>
-                      <Prout 'LAMBDAGAMMA<|UK' <Symb e.n> '| -> LAMBDA<|UK' <Symb e.n> '|GAMMA'>
-                      <Prout '[]<|UK' <Symb e.n> '| -> []|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
-                      <Prout '@ALPHA<|UK' <Symb e.n> '| -> ALPHA@|SR|>|' 'ALPHA' '|'>
-                      <Prout '[ALPHA<|UK' <Symb e.n> '| -> [ALPHA@|SR|>|ALPHA|'>
-                      <Prout '|SR|>|ALPHA|!' <Symb e.n> '!ALPHA -> <|UK' <Symb e.n> '|ALPHA!' <Symb e.n> '!'>  
-                      <Prout '|SR|>|ALPHA|!' <Symb e.n> '!BETA -> <|BACK|' 'BETA'>
-                      <Prout '@]<|UK' <Symb e.n> '| -> ]|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
-                      <Prout '|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|GAMMA -> GAMMA|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
-                      <Prout '|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|!' <Symb e.n> '! -> >|' <IndexList e.Str1> '|'>
-                      <Prout '>|' <IndexList e.Str1> '|' <IndexList e.Str1> ' -> <|UK' <Symb <Add e.n 1>> '|' <IndexList e.Str1> '!' <Symb <Add e.n 1>> '!'>
-                      <Prout '>|' <IndexList e.Str1> '| GAMMA -> <|BACK|GAMMA'>
-                      <CreateSRS <NextIter e.Str1> (e.Right) (<Add e.n 1>)>;
+    <Prout 'SECOND------------------------------------------------------' e.Str1>
+    <Prout 'LAMBDAGAMMA<|UK' <Symb e.n> '| -> LAMBDA<|UK' <Symb e.n> '|GAMMA'>
+    <Prout '[]<|UK' <Symb e.n> '| -> []|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
+    <Prout '@ALPHA<|UK' <Symb e.n> '| -> ALPHA@|SR|>|' 'ALPHA' '|'>
+    <Prout '[ALPHA<|UK' <Symb e.n> '| -> [ALPHA@|SR|>|ALPHA|'>
+    <Prout '|SR|>|ALPHA|!' <Symb e.n> '!ALPHA -> <|UK' <Symb e.n> '|ALPHA!' <Symb e.n> '!'>  
+    <Prout '|SR|>|ALPHA|!' <Symb e.n> '!BETA -> <|BACK|' 'BETA'>
+    <Prout '@]<|UK' <Symb e.n> '| -> ]|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
+    <Prout '|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|GAMMA -> GAMMA|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|'>
+    <Prout '|SKIP!' <Symb e.n> '|>|' <IndexList e.Str1> '|!' <Symb e.n> '! -> >|' <IndexList e.Str1> '|'>
+    <Prout '>|' <IndexList e.Str1> '|' <IndexList e.Str1> ' -> <|UK' <Symb <Add e.n 1>> '|' <IndexList e.Str1> '!' <Symb <Add e.n 1>> '!'>
+    <Prout '>|' <IndexList e.Str1> '| GAMMA -> <|BACK|GAMMA'>
+    <CreateSRS <NextIter e.Str1> (e.Right) (<Add e.n 1>)>;
 
     e.Str = <Prout e.Str>;
 }
